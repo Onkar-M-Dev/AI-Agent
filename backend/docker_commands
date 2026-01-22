@@ -26,8 +26,6 @@ $response = Invoke-RestMethod -Uri "http://localhost:12434/engines/v1/chat/compl
 $response.choices[0].message.content
 
 
-
-
 # from within a container
 curl http://model-runner.docker.internal/engines/v1/chat/completions \
     -H "Content-Type: application/json" \

@@ -21,6 +21,7 @@ def research_email(query: str, config: RunnableConfig):
     msg = f"Subject {response.subject}:\nBody: {response.content}"
     return msg
 
+
 @tool
 def send_me_email(subject: str, content: str) -> str:
     """
