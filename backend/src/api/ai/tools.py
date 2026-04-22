@@ -18,7 +18,7 @@ def research_email(query: str, config: RunnableConfig):
     add_field = metadata.get("additional_field")
     print('add_field', add_field)
     response = generate_email_message(query)
-    msg = f"Subject {response.subject}:\nBody: {response.content}"
+    msg = f"Subject: {response.subject}:\nBody: {response.contents}"
     return msg
 
 
