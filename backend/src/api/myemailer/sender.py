@@ -12,11 +12,14 @@ EMAIL_PORT = os.environ.get("EMAIL_PORT") or 465
 
 
 def send_mail(
-    subject: str = "No subject provided !",
-    content: str = "No message provided !",
-    to_email: str = EMAIL_ADDRESS,
+    subject: str = "No subject provided!",
+    content: str = "No message provided!",
+    to_email: str = None,   # ✅ FIXED
     from_email: str = EMAIL_ADDRESS
 ):
+    if not to_email:
+        raise ValueError("Recipient email is required")
+
     logger.info("Send mail tool executed")
     logger.info(f"Recipient: {to_email}")
 
@@ -27,7 +30,7 @@ def send_mail(
     msg.set_content(content)
 
     try:
-        with smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT) as smtp:
+        with smtplib.SMTP_SSL(EMAIL_HOST, int(EMAIL_PORT)) as smtp:
             logger.info("Attempting SMTP login...")
 
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
