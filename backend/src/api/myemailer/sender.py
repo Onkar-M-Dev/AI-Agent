@@ -1,12 +1,14 @@
 import os
 import smtplib
 from email.message import EmailMessage
+import logging
 
+logger = logging.getLogger(__name__)
 
-EMAIL_ADDRESS=os.environ.get("EMAIL_ADDRESS")
-EMAIL_PASSWORD=os.environ.get("EMAIL_PASSWORD")
-EMAIL_HOST=os.environ.get("EMAIL_HOST") or "smtp.gmail.com"
-EMAIL_PORT=os.environ.get("EMAIL_PORT")  or 465
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+EMAIL_HOST = os.environ.get("EMAIL_HOST") or "smtp.gmail.com"
+EMAIL_PORT = os.environ.get("EMAIL_PORT") or 465
 
 
 def send_mail(
@@ -15,8 +17,8 @@ def send_mail(
     to_email: str = EMAIL_ADDRESS,
     from_email: str = EMAIL_ADDRESS
 ):
-    print("SEND_MAIL TOOL EXECUTED")
-    print(f"Recipient: {to_email}")
+    logger.info("Send mail tool executed")
+    logger.info(f"Recipient: {to_email}")
 
     msg = EmailMessage()
     msg["Subject"] = subject
@@ -26,18 +28,16 @@ def send_mail(
 
     try:
         with smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT) as smtp:
-
-            print("Attempting SMTP login...")
+            logger.info("Attempting SMTP login...")
 
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
-            print("SMTP LOGIN SUCCESS")
+            logger.info("SMTP login successful")
 
             smtp.send_message(msg)
 
-            print("EMAIL SENT SUCCESS")
+            logger.info("Email sent successfully")
 
     except Exception as e:
-        print("SMTP ERROR:", e)
+        logger.error(f"SMTP ERROR: {e}")
         raise
-    
