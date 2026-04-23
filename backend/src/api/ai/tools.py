@@ -23,19 +23,29 @@ def research_email(query: str, config: RunnableConfig):
 
 
 @tool
-def send_me_email(subject: str, content: str) -> str:
+def send_me_email(
+    subject: str,
+    content: str,
+    to_email: str
+) -> str:
     """
-    Send an email to myself with a subject and content.
+    Send an email.
 
     Arguments:
-    - subject: str - Text subject of the email
-    - content: str - Text body content of the email
+    - subject: str - Email subject
+    - content: str - Email body
+    - to_email: str - Recipient email
     """
     try:
-        send_mail(subject=subject, content=content)
-    except:
-        return "Not Sent"
-    return "Sent email"
+        send_mail(
+            subject=subject,
+            content=content,
+            to_email=to_email
+        )
+    except Exception as e:
+        return f"Not Sent: {str(e)}"
+
+    return f"Email sent to {to_email}"
     
 
 @tool
