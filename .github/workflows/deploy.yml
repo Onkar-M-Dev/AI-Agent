@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Cloud CI Pipeline
 
 on:
   push:
